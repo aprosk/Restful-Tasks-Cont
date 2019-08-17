@@ -3,6 +3,10 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 
+import { FormsModule } from '@angular/forms';
+
+
+
 import { HttpService} from './http.service';
 
 import { HttpClientModule} from '@angular/common/http'; // to make http requests so we can fetch data from our database
@@ -13,7 +17,8 @@ import { HttpClientModule} from '@angular/common/http'; // to make http requests
   ],
   imports: [
     BrowserModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
   ],
   providers: [HttpService],
   bootstrap: [AppComponent]

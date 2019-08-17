@@ -1,12 +1,67 @@
-{{ tasks | json }}
-<h1>Restful Tasks API</h1>
+<!-- {{ tasks | json }} -->
+<div class="modal-edit">
+  <!-- <form>
+    <h2>Edit</h2>
+    <input type="text" name="title">
+    <input type="text" name="title">
+    <button type="submit">Save</button>
+    <button>Cancel</button>
+  </form> -->
+</div>
+<div class="container">
+  <h1>Tasks API</h1>
 
-<h2>All Tasks:</h2>
-<ul>
-  <li *ngFor="let task of tasks">{{task.title}}</li>
-</ul>
+  <div class="container bordered bg-primary text-white">
+    <h2>New Task</h2>
+    <div class="row">
+      
+      <form class="form col-sm-6" (submit)="onSubmitNew()">
+        <!-- <p>{{ newTask | json }}</p> -->
+        <div class="form-group">
+          <label for="title">Title</label>
+          <input class="form-control" type="text" name="title" id="title" [(ngModel)]="newTask.title">
+        </div>
+        <div class="form-group">
+          <label for="description">Description</label>
+          <input class="form-control" type="text" name="description"[(ngModel)]="newTask.description">
+        </div>
+        <div class="form-group">
+          <input type="submit">
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="container mt-4">
+    <h2>All Tasks:</h2>
 
-<h2>The third task:</h2>
-<ul>
-  <li>{{tasks[2].title}}</li>
-</ul>
+    <button class="mb-2" (click)="showTasks()">Get All Tasks</button>
+    <div *ngIf="showingTasks">
+      <div *ngFor="let task of tasks" class="card">
+        <div class="card-body">
+          <div *ngIf="task._id != selectedTask || mode != 'edit'">
+            <h5 class="card-title">{{task.title}}</h5>
+            <h6 class="mb-0" *ngIf="task._id == selectedTask">Description</h6>
+            <p *ngIf="task._id == selectedTask && mode == 'show'">{{task.description}}</p>
+          </div>
+          
+          <form *ngIf="task._id == selectedTask && mode == 'edit'" (submit)="onSubmitUpdate()">
+            <h6 class="mb-0">Title</h6>
+            <input type="text" name="title" [(ngModel)]="updatedTask.title" placeholder="Title" class="card-title">
+            <h6 class="mb-0">Description</h6>
+            <input type="text" name="description" [(ngModel)]="updatedTask.description">
+            <button type="submit" >Save</button>
+          </form>
+          
+          
+          
+          
+          <button (click)="onShow(task._id)">Show</button>
+          <button (click)="onEdit(task._id, task.title, task.description)">Edit</button>
+          <button (click)="deleteTask(task._id)">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p *ngIf="chosenTask">Task: {{task.title}}</p>
+  <p *ngIf="chosenTask">Description: {{task.description}}</p>
+</div>
